@@ -7,6 +7,10 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-02
+
+Built against fighters-codex v0.3.0 (`extern/fx_lib`).
+
 ### Added
 - Plugin skeleton (roadmap Phase 1, #31): `bridge/` builds the plugin shared
   library (`libfa-bridge.so` / `fa-bridge.dll` / `libfa-bridge.dylib`) with a
@@ -82,5 +86,6 @@ Built against fighters-codex v0.3.0 (`extern/fx_lib`).
   workflows are manual-only until the Phase 1 skeleton restores them with real
   tests; the release workflow extracts notes from CHANGELOG.md (#29)
 
-[Unreleased]: https://github.com/fighters-legacy/fa-bridge/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/fighters-legacy/fa-bridge/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/fighters-legacy/fa-bridge/releases/tag/v0.2.0
 [0.1.0]: https://github.com/fighters-legacy/fa-bridge/releases/tag/v0.1.0
