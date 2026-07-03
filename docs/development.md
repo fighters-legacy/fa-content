@@ -60,8 +60,9 @@ cmake --preset debug-msvc
 cmake --build --preset debug-msvc
 ```
 
-**Current status:** the project configures on all three platforms but defines no build
-targets yet — bridge code lands per [roadmap.md](roadmap.md) Phase 1.
+The build produces the plugin shared library (`libfa-bridge.so` / `fa-bridge.dll` /
+`libfa-bridge.dylib`) and stages a drop-in mod directory at
+`build/<preset>/stage/mods/fa-bridge/` containing the plugin and its `manifest.toml`.
 
 ### `FA_WITH_FX_LIB`
 
@@ -73,9 +74,12 @@ once the codex port lands):
 cmake --preset debug -DFA_WITH_FX_LIB=ON
 ```
 
-### Running tests (from Phase 1 onward)
+### `FA_BUILD_TESTS`
 
-There is no `tests/` tree yet; it arrives with the Phase 1 plugin skeleton. From then on:
+The test suite builds by default. Set `-DFA_BUILD_TESTS=OFF` to build only the plugin
+(e.g. when packaging).
+
+### Running tests
 
 ```bash
 ctest --preset debug --output-on-failure
@@ -103,6 +107,26 @@ Tests that require a real FA installation are skipped if `FA_INSTALL_DIR` is not
 
 ---
 
+## Testing the plugin against an engine build
+
+Every build stages a ready-to-load mod directory. Copy it into the `mods/` directory the
+engine scans (`fl-server`: the working directory; the game: next to the binary):
+
+```bash
+cp -r build/debug/stage/mods/fa-bridge /path/to/engine/mods/
+FA_INSTALL_DIR=/path/to/anything ./fl-server
+```
+
+Set `FA_INSTALL_DIR` to an existing directory so the stub reports `Ready` —
+otherwise the engine's `AssetManager` drops the pack after loading it
+(`NeedsConfiguration` with no configure UI), which is correct but noisy.
+
+**Windows:** the plugin and the engine must be built in the **same configuration**
+(Debug with Debug, Release with Release) — mixed CRT/iterator-debug-level builds fail
+at load time. See the ABI discipline note in [architecture.md](architecture.md).
+
+---
+
 ## Git setup
 
 Install the commit-msg hook to auto-append `Signed-off-by` (DCO requirement):
@@ -120,16 +144,16 @@ Create `CMakeUserPresets.json` in the repo root to override preset defaults (e.g
 
 ---
 
-## Code coverage (from Phase 1 onward)
+## Code coverage
 
-The coverage workflow is manual-only until there is code to measure. Locally:
+The coverage workflow runs on every push and pull request. Locally:
 
 ```bash
 cmake --preset coverage
 cmake --build --preset coverage
 ctest --preset coverage --output-on-failure
 lcov --capture --directory . --output-file coverage.info
-lcov --remove coverage.info '/usr/*' '*/tests/*' '*/vendor/*' \
+lcov --remove coverage.info '/usr/*' '*/tests/*' '*/vendor/*' '*/extern/*' \
      --output-file coverage.info
 ```
 

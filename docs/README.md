@@ -5,7 +5,7 @@
 | [roadmap.md](roadmap.md) | Phases, gates, epic index, and the 1.0 definition |
 | [asset-support-matrix.md](asset-support-matrix.md) | Which FA content can be bridged today, and what blocks the rest |
 | [development.md](development.md) | Build prerequisites, submodule setup, FA_INSTALL_DIR, CMake presets |
-| [architecture.md](architecture.md) | Planned architecture: FA install → fx_lib → transcode → engine |
+| [architecture.md](architecture.md) | Architecture: FA install → fx_lib → transcode → engine (bridge skeleton landed; transcode planned) |
 
 ## Contributing and Governance
 

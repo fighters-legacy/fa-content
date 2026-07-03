@@ -1,6 +1,6 @@
 "component: bridge":
   - changed-files:
-    - any-glob-to-any-file: ["bridge/**", "include/bridge/**"]
+    - any-glob-to-any-file: ["bridge/**", "include/bridge/**", "tests/**", "packaging/**"]
 
 "component: transcode":
   - changed-files:
@@ -8,7 +8,7 @@
 
 "component: build":
   - changed-files:
-    - any-glob-to-any-file: ["CMakeLists.txt", "CMakePresets.json", "cmake/**"]
+    - any-glob-to-any-file: ["CMakeLists.txt", "CMakePresets.json", "cmake/**", "extern/**"]
 
 "component: ci":
   - changed-files:

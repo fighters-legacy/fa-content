@@ -1,9 +1,10 @@
 name: Coverage
 
-# Manual-only until there is code to measure: with zero build targets and
-# zero tests this workflow uploaded nothing. The push/pull_request triggers
-# are restored by the Phase 1 skeleton PR (see docs/roadmap.md).
 on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -37,7 +38,7 @@ jobs:
         run: |
           lcov --capture --directory . --output-file coverage.info \
                --ignore-errors empty
-          lcov --remove coverage.info '/usr/*' '*/tests/*' '*/vendor/*' \
+          lcov --remove coverage.info '/usr/*' '*/tests/*' '*/vendor/*' '*/extern/*' \
                --output-file coverage.info --ignore-errors empty,unused
 
       - name: Upload to Codecov

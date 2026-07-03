@@ -49,8 +49,11 @@ jobs:
       - name: Check clang-format
         if: matrix.os == 'ubuntu-latest'
         run: |
+          # extern/ is vendored verbatim (engine headers, PIN.md) — never ours
+          # to format.
           git diff --name-only origin/${{ github.base_ref || 'main' }}...HEAD \
             | grep -E '\.(cpp|h|hpp|c)$' \
+            | grep -v '^extern/' \
             | xargs -r clang-format --dry-run --Werror
 
       - name: Configure
@@ -59,5 +62,5 @@ jobs:
       - name: Build
         run: cmake --build --preset ${{ matrix.preset }}
 
-      # The ctest step returns with the Phase 1 skeleton PR, without
-      # continue-on-error and with --no-tests=error (see docs/roadmap.md).
+      - name: Test
+        run: ctest --preset ${{ matrix.preset }}

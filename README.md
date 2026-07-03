@@ -19,17 +19,20 @@ No FA game assets are included or may be committed to this repository.
 
 ## Status
 
-**Pre-implementation.** The repository configures on all three platforms but builds no
-targets yet; bridge code lands per the phase plan in [docs/roadmap.md](docs/roadmap.md).
-Which FA content is already fully understood and ready to bridge — aircraft flight
-models, entity stats, ~95% of 3D models, all 2D art, sound effects — is tracked in
+**Plugin skeleton (roadmap Phase 1).** The plugin builds on all three platforms as
+`libfa-bridge.so` / `fa-bridge.dll` / `libfa-bridge.dylib` with a stub `IContentPack`
+that the engine's `ModLoader` can load; it identifies itself and reports readiness from
+`FA_INSTALL_DIR`, but serves no assets yet. Transcoding lands per the phase plan in
+[docs/roadmap.md](docs/roadmap.md). Which FA content is already fully understood and
+ready to bridge — aircraft flight models, entity stats, ~95% of 3D models, all 2D art,
+sound effects — is tracked in
 [docs/asset-support-matrix.md](docs/asset-support-matrix.md).
 
 ## Dependencies
 
 | Dependency | Source |
 |---|---|
-| fighters-legacy | Engine interface headers (`IContentPack.h`), vendored with a recorded pin (roadmap Phase 1) |
+| fighters-legacy | Engine interface headers (`IContentPack.h`), vendored at `extern/fl-headers`, pinned to engine v0.2.6 ([PIN.md](extern/fl-headers/PIN.md)) |
 | fx_lib | `extern/fx_lib` submodule from [fighters-codex](https://github.com/jomkz/fighters-codex), pinned to a release tag |
 
 ## Quick start
