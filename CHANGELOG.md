@@ -8,11 +8,35 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Added
+- Plugin skeleton (roadmap Phase 1, #31): `bridge/` builds the plugin shared
+  library (`libfa-bridge.so` / `fa-bridge.dll` / `libfa-bridge.dylib`) with a
+  stub `fa::FaContentPack` implementing the engine's `IContentPack` —
+  `priority` 100 (overrides fl-base-pack), `init()` keyed on `FA_INSTALL_DIR`,
+  every `load*()` empty until the transcode pipelines land — and exports
+  `fighters_legacy_create_pack()` for the engine's `ModLoader` (#10)
+- `extern/fl-headers/` — the engine's three interface headers vendored verbatim
+  at engine v0.2.6, with `PIN.md` recording tag/SHA, per-file sha256 hashes, and
+  the update procedure
+- `packaging/manifest.toml.in` + build-time staging: every build produces a
+  drop-in mod directory at `build/<preset>/stage/mods/fa-bridge/`
+- Assert-based smoke tests: `test_fa_content_pack` (stub contract, all `init()`
+  states) and `test_plugin_load` (loads the built plugin exactly as the
+  engine's `ModLoader` does — dlopen/LoadLibrary, factory symbol, manifest
+  consistency)
+- `FA_BUILD_TESTS` CMake option (default ON); MSVC test presets; `ctest` step
+  restored in CI with `noTestsAction: error`; sanitizer and coverage workflows
+  restored to run on every push and pull request
 - `.github/workflows/add-to-project.yml` — auto-adds newly opened (or reopened)
   issues and pull requests to the org-wide
   [Fighters Ecosystem project board](https://github.com/orgs/fighters-legacy/projects/3)
   via `actions/add-to-project`; uses `pull_request_target` so fork PRs can read
   the `ADD_TO_PROJECT_PAT` org secret without checking out untrusted code
+
+### Fixed
+- `asan` and `coverage` presets now pass their instrumentation flags to shared
+  library links (`CMAKE_SHARED_LINKER_FLAGS`) — required for a SHARED plugin
+- `debug-msvc` / `release-msvc` test presets exist, so the
+  `ctest --preset debug-msvc` instruction in docs/development.md works
 
 ## [0.1.0] - 2026-07-02
 

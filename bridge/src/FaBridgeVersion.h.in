@@ -1,0 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+#pragma once
+
+// Generated from PROJECT_VERSION at configure time — edit CMakeLists.txt, not
+// this value. scripts/release.py bumps the single source.
+#define FA_BRIDGE_VERSION "@PROJECT_VERSION@"

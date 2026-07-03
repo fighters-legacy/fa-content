@@ -21,9 +21,9 @@ issues + native sub-issues = work breakdown. What can be bridged today lives in
 ## Related repositories
 
 - **[fighters-legacy/fighters-legacy](https://github.com/fighters-legacy/fighters-legacy)** —
-  the engine; owns `IContentPack`. Its three interface headers are vendored with a
-  recorded pin (roadmap Phase 1); the interface may gain pure virtuals, so bump the pin
-  deliberately, never casually.
+  the engine; owns `IContentPack`. Its three interface headers are vendored at
+  `extern/fl-headers` with the pin recorded in `extern/fl-headers/PIN.md`; the interface
+  may gain pure virtuals, so bump the pin deliberately, never casually.
 - **[jomkz/fighters-codex](https://github.com/jomkz/fighters-codex)** (MIT) — FA
   reverse-engineering docs and `fx_lib`, consumed as the `extern/fx_lib` submodule pinned
   to a release tag. RE documentation lives *there*; implementations live *here*.
@@ -70,5 +70,5 @@ drift — don't add unchecked claims to README.
 - `docs/roadmap.md` — phases, gates, and the 1.0 definition
 - `docs/asset-support-matrix.md` — what can be bridged today, and what blocks the rest
 - `docs/development.md` — build prerequisites and FA_INSTALL_DIR setup
-- `docs/architecture.md` — planned architecture: FA install → fx_lib → transcode → engine
+- `docs/architecture.md` — architecture: FA install → fx_lib → transcode → engine
 - `GOVERNANCE.md` — RFC process for IContentPack binding changes

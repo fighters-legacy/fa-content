@@ -14,6 +14,7 @@ endif()
 # fx_lib does not yet build on Linux/macOS; the default flips ON once
 # fighters-codex Phase 1 (cross-platform port) ships. See docs/roadmap.md.
 option(FA_WITH_FX_LIB "Build against fx_lib (requires fighters-codex Phase 1)" OFF)
+option(FA_BUILD_TESTS "Build the fa-bridge test suite" ON)
 
 if(FA_WITH_FX_LIB)
     if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/extern/fx_lib/lib/CMakeLists.txt)
@@ -23,4 +24,11 @@ if(FA_WITH_FX_LIB)
     add_subdirectory(extern/fx_lib/lib)
 endif()
 
-# Bridge source trees are added here as the roadmap phases land (docs/roadmap.md)
+# Bridge source trees are added as the roadmap phases land (docs/roadmap.md):
+# bridge/ (Phase 1) exists; transcode/ arrives with Phase 3.
+add_subdirectory(bridge)
+
+if(FA_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

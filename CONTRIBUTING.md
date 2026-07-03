@@ -38,7 +38,7 @@ Signed-off-by: Your Name <your@email>
 
 | Scope | Targets |
 |---|---|
-| `bridge` | `bridge/` — IContentPack implementation (created in roadmap Phase 1) |
+| `bridge` | `bridge/` — IContentPack implementation |
 | `transcode` | `transcode/` — canonical-format writers (created in roadmap Phase 3) |
 | `build` | `CMakeLists.txt`, `CMakePresets.json`, `extern/` pins |
 | `ci` | `.github/workflows/`, `.github/dependabot.yml` |
@@ -105,7 +105,7 @@ The DCO certifies that you have the right to contribute the code under the proje
 
 ## Code coverage
 
-New code added in PRs should aim for ≥70% test coverage (applies once code exists — roadmap Phase 1 onward). Codecov posts an automated comment on every PR showing the coverage delta for changed files. CI measures coverage automatically — you do not need to install anything.
+New code added in PRs should aim for ≥70% test coverage. Codecov posts an automated comment on every PR showing the coverage delta for changed files. CI measures coverage automatically — you do not need to install anything.
 
 ---
 

@@ -56,7 +56,8 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_COMPILE_WARNING_AS_ERROR": "OFF",
         "CMAKE_CXX_FLAGS": "--coverage",
-        "CMAKE_EXE_LINKER_FLAGS": "--coverage"
+        "CMAKE_EXE_LINKER_FLAGS": "--coverage",
+        "CMAKE_SHARED_LINKER_FLAGS": "--coverage"
       }
     },
     {
@@ -66,7 +67,8 @@
       "cacheVariables": {
         "CMAKE_COMPILE_WARNING_AS_ERROR": "OFF",
         "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer",
-        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined"
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address,undefined"
       }
     }
   ],
@@ -74,16 +76,18 @@
   "buildPresets": [
     { "name": "debug",        "configurePreset": "debug"        },
     { "name": "release",      "configurePreset": "release"      },
-    { "name": "debug-msvc",   "configurePreset": "debug-msvc"   },
-    { "name": "release-msvc", "configurePreset": "release-msvc" },
+    { "name": "debug-msvc",   "configurePreset": "debug-msvc",   "configuration": "Debug"   },
+    { "name": "release-msvc", "configurePreset": "release-msvc", "configuration": "Release" },
     { "name": "coverage",     "configurePreset": "coverage"     },
     { "name": "asan",         "configurePreset": "asan"         }
   ],
 
   "testPresets": [
-    { "name": "debug",    "configurePreset": "debug",    "output": { "outputOnFailure": true } },
-    { "name": "release",  "configurePreset": "release",  "output": { "outputOnFailure": true } },
-    { "name": "coverage", "configurePreset": "coverage", "output": { "outputOnFailure": true } },
-    { "name": "asan",     "configurePreset": "asan",     "output": { "outputOnFailure": true } }
+    { "name": "debug",        "configurePreset": "debug",        "output": { "outputOnFailure": true }, "execution": { "noTestsAction": "error" } },
+    { "name": "release",      "configurePreset": "release",      "output": { "outputOnFailure": true }, "execution": { "noTestsAction": "error" } },
+    { "name": "debug-msvc",   "configurePreset": "debug-msvc",   "configuration": "Debug",   "output": { "outputOnFailure": true }, "execution": { "noTestsAction": "error" } },
+    { "name": "release-msvc", "configurePreset": "release-msvc", "configuration": "Release", "output": { "outputOnFailure": true }, "execution": { "noTestsAction": "error" } },
+    { "name": "coverage",     "configurePreset": "coverage",     "output": { "outputOnFailure": true }, "execution": { "noTestsAction": "error" } },
+    { "name": "asan",         "configurePreset": "asan",         "output": { "outputOnFailure": true }, "execution": { "noTestsAction": "error" } }
   ]
 }

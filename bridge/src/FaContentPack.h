@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+#pragma once
+
+#include "content/IContentPack.h"
+
+#include <filesystem>
+
+namespace fa {
+
+// Stub IContentPack (roadmap Phase 1): identifies the pack to the engine and
+// reports readiness from FA_INSTALL_DIR, but serves no assets yet. The
+// fx_lib-backed transcode pipelines land per roadmap Phases 2-3.
+class FaContentPack : public fl::IContentPack {
+  public:
+    // Above fl-base-pack (50) so bridged FA content overrides the engine's
+    // free base pack in the priority stack.
+    static constexpr int kPriority = 100;
+
+    const char* name() const override;
+    const char* version() const override;
+    const char* id() const override;
+    int priority() const override;
+    const char* rootDirectory() const override;
+
+    Status init() override;
+    bool configure(fl::IWindow* window) override;
+
+    bool hasAsset(const char* name, fl::AssetType type) const override;
+
+    std::optional<fl::MeshData> loadMesh(const char* name) override;
+    std::optional<fl::TextureData> loadTexture(const char* name) override;
+    std::optional<fl::AudioBuffer> loadAudio(const char* name) override;
+    std::optional<fl::FlightModel> loadFlightModel(const char* name) override;
+    std::optional<fl::MissionData> loadMission(const char* name) override;
+    std::optional<fl::TerrainData> loadTerrain(const char* name) override;
+    std::optional<fl::AIScript> loadAIScript(const char* name) override;
+    std::optional<fl::EntityDefData> loadEntityDef(const char* name) override;
+
+    std::vector<std::string> listAssets(fl::AssetType type) const override;
+
+    std::optional<std::string> loadConfig(const char* name) const override;
+
+    std::optional<std::string> resolveTerrainChunk(const char* terrainId, uint32_t chunkX, uint32_t chunkY,
+                                                   uint32_t lod) const override;
+
+    fl::TrustLevel getTrustLevel() const override;
+    bool isNativePlugin() const override;
+
+  private:
+    std::filesystem::path m_installDir;
+};
+
+} // namespace fa

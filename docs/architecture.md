@@ -1,4 +1,4 @@
-# Architecture (planned)
+# Architecture
 
 fa-bridge is a native bridge plugin implementing the `IContentPack` interface from
 [fighters-legacy](https://github.com/fighters-legacy/fighters-legacy). It transcodes
@@ -8,8 +8,9 @@ using the FA parsers in [fx_lib](https://github.com/jomkz/fighters-codex).
 The engine has no knowledge of FA, this repository, or any specific game. All it knows is
 `IContentPack`.
 
-**Status:** this document describes the *planned* architecture. The modules below land
-per [roadmap.md](roadmap.md); none exist yet.
+**Status:** `bridge/` and `extern/fl-headers` exist (Phase 1 — a stub pack the engine
+loads; it serves no assets yet). `transcode/` and the fx_lib-backed load paths land per
+[roadmap.md](roadmap.md).
 
 ---
 
@@ -65,11 +66,15 @@ logged.
 
 ---
 
-## Key modules (planned)
+## Key modules
 
-### `bridge/`
+### `bridge/` (exists — stub)
 
-Implements `IContentPack`. Each `load*()` method:
+Implements `IContentPack` in `namespace fa` — a static core library
+(`fa-bridge-core`, unit-testable without loading the plugin) plus a thin shared-library
+shell exporting only `fighters_legacy_create_pack()`. Today every `load*()` returns
+nullopt and `init()` reports readiness from `FA_INSTALL_DIR`. From Phase 2/3 on, each
+`load*()` method:
 1. Locates the relevant file(s) in the mounted FA install (case-insensitive lookup —
    FA installs vary in filename case and Linux filesystems are case-sensitive)
 2. Calls the appropriate fx_lib parser to decode the FA binary format
@@ -79,7 +84,7 @@ A translation cache sits between transcode and the engine — converted assets a
 on first load so repeated requests (e.g. a texture used by many models) don't re-parse
 and re-encode the source each time.
 
-### `transcode/`
+### `transcode/` (planned — Phase 3)
 
 The canonical-format write side this repository uniquely owns: ShMesh→glb (feet→metres),
 RGBA8→PNG, PCM→Vorbis, BRF field mapping→TOML. Dependency choices are recorded in
@@ -94,12 +99,13 @@ a release tag. Provides the FA format parsers; the bridge never duplicates parse
 What each parser can deliver today is tracked in
 [asset-support-matrix.md](asset-support-matrix.md).
 
-### `extern/fl-headers` (Phase 1)
+### `extern/fl-headers` (exists)
 
 Verbatim copies of the engine's three interface headers (`IContentPack.h`,
-`AssetTypes.h`, `TrustLevel.h` — a closed, std-only set) with a `PIN.md` recording the
-engine tag/SHA and update procedure. Vendored because the engine exports no CMake
-package; the headers carry a GPL linking exception.
+`AssetTypes.h`, `TrustLevel.h` — a closed, std-only set), currently pinned to engine
+**v0.2.6**. [PIN.md](../extern/fl-headers/PIN.md) records the tag/SHA, per-file hashes,
+and the update procedure. Vendored because the engine exports no CMake package; the
+headers carry a GPL linking exception.
 
 ---
 
