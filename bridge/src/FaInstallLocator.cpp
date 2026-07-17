@@ -29,7 +29,9 @@ std::optional<std::filesystem::path> probeRegistry() {
         "SOFTWARE\\Jane's Combat Simulations\\Fighters Anthology",
     };
     static constexpr const char* kValues[] = {"Install Directory", "InstallPath", "PATH", ""};
-    static constexpr HKEY kRoots[] = {HKEY_LOCAL_MACHINE, HKEY_CURRENT_USER};
+    // const, not constexpr: the HKEY_* macros expand to integer-to-pointer
+    // casts, which are not constant expressions (MSVC rejects them, C2131).
+    static const HKEY kRoots[] = {HKEY_LOCAL_MACHINE, HKEY_CURRENT_USER};
     // FA is a 32-bit app: on x64 its keys live in the WOW6432 view.
     static constexpr DWORD kViews[] = {RRF_RT_REG_SZ, RRF_RT_REG_SZ | RRF_SUBKEY_WOW6432KEY};
 
