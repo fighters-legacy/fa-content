@@ -64,15 +64,18 @@ The build produces the plugin shared library (`libfa-bridge.so` / `fa-bridge.dll
 `libfa-bridge.dylib`) and stages a drop-in mod directory at
 `build/<preset>/stage/mods/fa-bridge/` containing the plugin and its `manifest.toml`.
 
-### `FA_WITH_FX_LIB`
+### fx_lib
 
-fx_lib does not compile on Linux/macOS until fighters-codex Phase 1 lands, so the
-`FA_WITH_FX_LIB` option defaults **OFF**. To build against fx_lib (e.g. on Windows, or
-once the codex port lands):
+fx_lib is always built and linked from the `extern/fx_lib` submodule — the former
+`FA_WITH_FX_LIB` option is gone (fighters-codex ships fx_lib cross-platform since its
+Phase 1). Configuration fails with a clear message if the submodule is missing; fix with:
 
 ```bash
-cmake --preset debug -DFA_WITH_FX_LIB=ON
+git submodule update --init --recursive
 ```
+
+The codex root is embedded as a subproject: only its `lib/` (`fx::lib`, the parsers) and
+`render/` (`fx::render`, unused here) build; the codex CLI, GUI, tools, and tests do not.
 
 ### `FA_BUILD_TESTS`
 

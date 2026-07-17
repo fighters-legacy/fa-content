@@ -17,7 +17,8 @@ list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 include(Catch)
 
 add_executable(fa_bridge_tests
-    test_fa_content_pack.cpp)
+    test_fa_content_pack.cpp
+    test_fx_lib_link.cpp)
 target_link_libraries(fa_bridge_tests PRIVATE fa-bridge-core Catch2::Catch2WithMain)
 catch_discover_tests(fa_bridge_tests)
 

@@ -16,11 +16,12 @@ can consume, and names the transcoding work this repository uniquely owns.
 | **Blocked (repo)** | Not usable yet; the named repository owns the blocker. |
 | **No engine target** | fx_lib decodes it, but the engine has no consuming subsystem yet. |
 
-**Global gate:** fx_lib does not yet build on Linux/macOS — that is
-fighters-codex Phase 1, and every *Ready* verdict below inherits it. Work
-that needs **zero fx_lib** can start immediately: transcoder design docs, the
-PT→FlightModel-TOML field-mapping document, synthetic test fixtures, and
-vendoring the write-side libraries (see [roadmap](roadmap.md)).
+**Global gate — lifted.** fx_lib builds cross-platform upstream (fighters-codex
+Phase 1) and this repo links it unconditionally on all three CI platforms; the
+remaining upstream macOS gap
+([codex#155](https://github.com/jomkz/fighters-codex/issues/155)) is proven
+here, with fixes flowing upstream. *Ready* verdicts no longer inherit any
+build gate — bridge transcoder work can start on every *Ready* row.
 
 ## Start-now summary
 

@@ -51,9 +51,10 @@ cmake --preset debug
 cmake --build --preset debug
 ```
 
-Note: `fx_lib` builds on Linux (fighters-codex Phase 1 has landed); macOS support is pending
-([fighters-codex#155](https://github.com/jomkz/fighters-codex/issues/155)). The `FA_WITH_FX_LIB`
-CMake option currently defaults OFF.
+Note: `fx_lib` is linked unconditionally (the former `FA_WITH_FX_LIB` option is gone) —
+fighters-codex ships it cross-platform on Linux and Windows, and this repo's macOS CI leg is
+the proving ground for the remaining upstream macOS gap
+([fighters-codex#155](https://github.com/jomkz/fighters-codex/issues/155)).
 
 See [docs/development.md](docs/development.md) for full prerequisites and build
 instructions.
