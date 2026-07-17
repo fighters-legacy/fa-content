@@ -85,6 +85,12 @@ The test suite builds by default. Set `-DFA_BUILD_TESTS=OFF` to build only the p
 ctest --preset debug --output-on-failure
 ```
 
+Unit tests use **Catch2 v3** (v3.7.1, the same framework and version as fighters-codex),
+fetched with CMake `FetchContent` — the first configure of each build directory needs
+network access. Each `TEST_CASE` registers as its own `ctest` entry. `test_plugin_load`
+is deliberately a plain executable, not a Catch2 target: it rehearses the engine's
+`dlopen`/`LoadLibrary` ModLoader flow in a process of its own.
+
 ---
 
 ## Runtime testing against a real FA installation (from Phase 2 onward)
