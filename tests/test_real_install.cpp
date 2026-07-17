@@ -64,22 +64,19 @@ TEST_CASE("real install extracts a compressed entry", "[integration]") {
     REQUIRE(vfs.mount(install));
 
     // Find any DCL-compressed (flags==4) entry and prove blast on real data.
+    // listStems already spans every mounted lib, so one pass over the texture
+    // stems suffices.
     bool extractedOne = false;
-    for (size_t li = 0; li < vfs.libCount() && !extractedOne; ++li) {
-        // Walk entries via the public surface: list every mapped extension and
-        // read the first compressed hit.
-        for (const auto& stem : vfs.listStems(fa::extensionsFor(fl::AssetType::Texture))) {
-            const auto ref = vfs.findStem(stem, fa::extensionsFor(fl::AssetType::Texture));
-            if (ref && ref->entry->flags == 4) {
-                bool unsupported = false;
-                const auto bytes = vfs.read(*ref, true, &unsupported);
-                CHECK_FALSE(unsupported);
-                CHECK_FALSE(bytes.empty());
-                extractedOne = true;
-                break;
-            }
+    for (const auto& stem : vfs.listStems(fa::extensionsFor(fl::AssetType::Texture))) {
+        const auto ref = vfs.findStem(stem, fa::extensionsFor(fl::AssetType::Texture));
+        if (ref && ref->entry->flags == 4) {
+            bool unsupported = false;
+            const auto bytes = vfs.read(*ref, true, &unsupported);
+            CHECK_FALSE(unsupported);
+            CHECK_FALSE(bytes.empty());
+            extractedOne = true;
+            break;
         }
-        break; // listStems already spans all libs; one pass suffices
     }
     CHECK(extractedOne);
 }
